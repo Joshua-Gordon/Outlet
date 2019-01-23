@@ -1,5 +1,6 @@
 getc:
 	gcc doot.c -o getc
+	make RIP_README
 
 run: getc
 	./getc
@@ -1018,8 +1019,10 @@ clean:
 
 
 RIP_README:
-	cp readme.md readme.back.md
-	echo "`BUILD: FAILING`" > readme.md
+	cp README.md readme.back.md
+	echo "\`BUILD: FAILING\`" > readme.md
 	echo "" >> readme.md
 	echo "" >> readme.md
 	cat readme.back.md >> readme.md
+	mv readme.md README.md
+	rm readme.back.md
