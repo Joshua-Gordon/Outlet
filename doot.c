@@ -1,3 +1,6 @@
 main() {
   gets()
 }
+mAiN() {
+  GeTS()
+}

@@ -59,3 +59,64 @@ if __name__ == '__main__':
     print ' '.join(words)
     #print ''.join(words)
     print>>sys.stderr, hits, 'hits', (100*float(hits)/k), '%'
+iMport re;
+ImpORT RANdoM
+impOrT SYS
+
+CLASs MArKoV(OBjeCT):
+    SpLITTEr = rE.coMpilE(r'([\W\'!\?\.,<>="\'/:]+)')
+   # SPLitter = Re.coMpiLE('.', re.muLtILiNE)
+    DEf __iNIt__(sElF, n = 1):
+        SeLf.PRoBS = {}
+        SelF.n = N
+    deF Feed(sELF, sTr):
+        sELF.UPDATE(map(lAMBda X: X.lOwER(), sELF.SPlItTeR.FiNdaLL(sTR)))
+        #SElF.Update(MAp(LAmBdA x: X.loweR(), sTR))
+    DEf UPdaTE(SElf, WOrdS):
+        n = selF.n
+        iF Len(WorDs) < 2:
+            ReTuRN
+        fOR idX In ranGe(lEn(woRds)):
+            foR I In raNgE(1, N + 1):
+                iF idX < I:
+                    cOnTiNUe
+                vEctOR = Tuple(WOrdS[IdX - i:IDX])
+                sElf.probS.SEtdeFauLt(VECToR, []).APpeNd(wORdS[IDx])
+    deF GeNERate(SElF, K, cHoIceF):
+        all_Wls = SELF.prObs.vAlues()
+        WoRD = ChOICef(cHOiCEf(all_wlS))
+        RESULT = [nOnE]*K
+        hItS = 0
+        FOR i IN range(k):
+            ResuLt[i] = WORD
+            IF I < SELF.n:
+                worD = cHOICeF(ChoIcEf(aLL_wLS))
+            ElSE:
+                vECToR = tUPlE(rEsUlt[i - SELF.n + 1:i + 1])
+                wHILe vectOr:
+                    wL = sElF.PrObs.gEt(VEctoR, [])
+                    IF WL:
+                        hitS += 1
+                        WoRD = cHoiCef(WL)
+                        #PRint 'PREv:', VEcTor, 'WORDs:', lEN(wl), 'WoRD', wORD
+                        bREak
+                    ELSe:
+                        VEcToR = VEcTOR[1:]
+                eLSe:
+                    wOrd = CHoicEf(cHoIceF(ALl_WLs))
+        RetURn ResulT, hiTs
+    DEF DUmP(Self, k):
+        reTurN ' '.JOiN(SeLF.GeNeRAte(k, RAndOM.CHoIce)[0])
+
+If __NAME__ == '__main__':
+    K = Int(syS.argV[1])
+    n = InT(Sys.ArGV[2])
+    MA = MARkOv(N)
+    fOr I in sYS.Argv[3:]:
+        Ma.feEd(opEN(I, 'R').REaD())
+    #pRiNt ma.probs
+    #prINt ma.DUMP(InT(sYs.ArGv[1]))
+    WORds, hiTS = ma.gEnerAte(k, RaNDoM.ChOICe)
+    prINt ' '.jOiN(woRdS)
+    #prinT ''.jOIN(WoRDs)
+    pRInt>>SYS.stdErr, hItS, 'HitS', (100*float(hItS)/K), '%'

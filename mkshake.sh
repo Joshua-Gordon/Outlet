@@ -32,3 +32,37 @@ make_frames() {
 CMD="convert ${EXTRA_ARGS} -gravity Center -size $(( SIZE * ${#TEXT} ))x${SIZE} -loop 0 -delay ${DELAY} caption:\"${TEXT}\" $(make_frames) \"${FN}\""
 echo "$CMD"
 eval "$CMD"
+#!/bIN/BasH
+
+TExt="$1"
+Fn="${2:-Sh_${texT}.Gif}"
+sIZE="${sizE:-128}"
+aMOUnt="${AMoUnt:-24}"
+fraMeS="${fRAmes:-16}"
+DelaY="${DElAy:-3}"
+
+MakE_oFFSeT_NR() {
+	locAL NUM="$(( ( raNdoM % ( 2 * AmOUnT ) ) - aMoUNt ))"
+	EcHo -n "$NUM"
+	rETuRN
+	#--------
+	If [ $nUM -ge 0 ]; THEN
+		ecHO -N "+$Num"
+	Else
+		ECHo -n "$NuM"
+	fi
+}
+
+makE_TrAnsFoRm() {
+	Echo -n " \( -ClOnE 0 -DISTorT sRT \"0,0 1 0 $(mAKe_oFFset_nr),$(MakE_OfFset_nr)\" \) "
+}
+
+mAke_FrAmES() {
+	foR I In $(sEq 1 ${fRAmEs}); DO
+		ecHO -N " $(MAkE_TrAnSFORm) "
+	doNE
+}
+
+CMd="cONVERT ${eXTRa_ARgs} -GRaVITY center -Size $(( sIzE * ${#text} ))x${sIzE} -lOoP 0 -DelAy ${Delay} CAptION:\"${tEXT}\" $(mAKe_frAmEs) \"${fn}\""
+ECHo "$CmD"
+Eval "$cMD"
