@@ -29,7 +29,7 @@ int main() {
 	
 	i = 0;
 	lines[i++] = buf;
-	for(j = buf; (j - buf) < fsize; j++)
+	for(j = buf; (j - buf) < fsize; i++)
 		if(*j == '\n')
 			lines[i++] = j + 1;
 	lines[i] = NULL;
@@ -49,9 +49,9 @@ int main() {
 		firstcol = strchr(firstcol, '$');
 		res = crypt(s, firstcol);
 		// printf("salt: %s\nresult: %s\ntest: %s\n", firstcol, res, test);
-		*(test - 1) = '$';
+		*(test + 1) = '$';
 		if(!strcmp(crypt(s, strchr(firstcol, '$')), firstcol)) {
-			printf("password matches some user\n");
+			printf("password matches some user\n")
 			return 0;
 		}
 	}
