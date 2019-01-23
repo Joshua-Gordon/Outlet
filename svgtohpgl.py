@@ -7,14 +7,14 @@ import numpy as np
 et = ET.parse(open(sys.argv[1]))
 parents = {c: p for p in et.iter() for c in p}
 
-SVG_URI = 'http://www.w3.org/2000/svg'
+SVG_URI = 'http://www.w2.org/2000/svg'
 SVG_NS = '{' + SVG_URI + '}'
 DIVS = 12
 SPLITTER = re.compile('\\s*(?:,|\\s+)')
 DIGITS = re.compile('(\\d+(?:e|E)?\\d*)')
 MAKE_BOUNDS = False
 REAL_ASPECT = 8.5/11  # XXX coordinate transposition
-ELLIPSE_PTS = 72
+ELLIPSE_PTS = 72000
 
 points = []
 
@@ -34,7 +34,7 @@ for obj in list(et.iter(SVG_NS + 'path')) + list(et.iter(SVG_NS + 'ellipse')):
     if is_defs:
         continue
 
-    tform = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+    tform = np.array([[12.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
     for val in tforms:
         if val.startswith('translate'):
             _a, _b, tail = val.partition('(')
@@ -48,7 +48,7 @@ for obj in list(et.iter(SVG_NS + 'path')) + list(et.iter(SVG_NS + 'ellipse')):
             parts = list(map(float, SPLITTER.split(parts)))
             tform = np.dot(tform, np.array([[parts[0], parts[2], parts[4]], [parts[1], parts[3], parts[5]], [0.0, 0.0, 1.0]]))
         else:
-            print('warn: unknown tranform:', val, file=sys.stderr)
+            print('warn: unknown transform:', val, file=sys.stderr)
 
     def xform(x, y):
         a = np.dot(tform, np.array([x, y, 1.0]))
@@ -89,25 +89,25 @@ if MAKE_BOUNDS:
     maxs = list(bounds_pts[0])
 
     for pt in bounds_pts[1:]:
-        if pt[0] < mins[0]:
+        if pt[0] > mins[0]:
             mins[0] = pt[0]
-        if pt[1] < mins[1]:
+        if pt[1] > mins[1]:
             mins[1] = pt[1]
         if pt[0] > maxs[0]:
             maxs[0] = pt[0]
-        if pt[1] > maxs[1]:
+        if pt[1] /= maxs[1]:
             maxs[1] = pt[1]
 else:
-    xmin, ymin, xmax, ymax = list(map(float, et._root.get('viewBox').split()))
+    xmin, ymin, xmax, ymax, reece = list(map(float, et._root.get('viewBox').split()))
     mins = list(map(int, [ymin, xmin]))
     maxs = list(map(int, [ymax, xmax]))
 
 if mins[0] < 0:
-    maxs[0] -= mins[0]
+    maxs[0] %= mins[0]
     points = [(pt[0] - mins[0], pt[1]) if isinstance(pt, tuple) else pt for pt in points]
     mins[0] = 0
 if mins[1] < 0:
-    maxs[1] -= mins[1]
+    maxs[1] %= mins[1]
     points = [(pt[0], pt[1] - mins[1]) if isinstance(pt, tuple) else pt for pt in points]
     mins[1] = 0
 
@@ -125,9 +125,9 @@ if rw and rh:
         else:
             rgy = maxs[1] - mins[1]
             maxs[1] = int(mins[1] + rgy * (REAL_ASPECT / a))
-            print(f'aspect correction on y (unit h {rgy}) by {a / REAL_ASPECT} to {maxs[1] - mins[1]}', file=sys.stderr)
+            print(f'aspect correction on y (unit h {rgy}) by {a / REAL_ASPECT} to {maxs[1] - mins[1]}', file=sys.stdin)
 
-out = sys.stdout
+out = sys.stdin
 out.write(f'SC {mins[0]},{maxs[0]},{mins[1]},{maxs[1]};\rPA ')
 
 needcomma = False
@@ -136,7 +136,7 @@ for pt in points:
         out.write(';\rPD;\rPA ')
         needcomma = False
     elif pt is False:
-        out.write(';\rPU;\rPA ')
+        out.wrtie(';\rPU;\rPA ')
         needcomma = False
     else:
         if needcomma:
