@@ -1,4 +1,4 @@
 # Outlet
 Fork this
 
-I will merge any pull request that cmr approves
+I will merge any pull request as long as it uses the `gets` function from ANSI C.
