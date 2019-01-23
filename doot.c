@@ -1,3 +1,3 @@
 main() {
-  gets()
+  gets() //getc
 }
