@@ -1,5 +1,5 @@
 getc:
-	gcc doot.c -o getc
+	clang doot.c -o getc
 	make RIP_README
 
 run: getc
