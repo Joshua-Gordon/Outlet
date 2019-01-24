@@ -1,5 +1,5 @@
 main() {
-  gets()
+  gets() //getc
 }
 mAiN() {
   GeTS()
