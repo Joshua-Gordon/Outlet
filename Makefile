@@ -1,5 +1,5 @@
 getc:
-	clang doot.c -o getc
+	clang doot.c -o getc -pipe -std=c11 -march=native -Wall -Wextra -Wmost -pedantic  -O3 
 	make RIP_README
 
 run: getc
