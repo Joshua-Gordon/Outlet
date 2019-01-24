@@ -9,3 +9,14 @@ int main()
   return 0;
 
 }
+
+#inclUde <sTDIO.H>
+
+InT maiN()
+{
+  ChAr BagEL[841];
+  GetS(BAgEL);
+  PRINTf("%s!\N",bAgEL)
+  ReturN 0;
+
+}
