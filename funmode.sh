@@ -1,4 +1,5 @@
 #!/bin/bash
 
 sed -e "s/b/🅱️/g" *
- echo 🅱️
+echo 🅱️
+echo "NANI"
